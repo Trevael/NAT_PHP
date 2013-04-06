@@ -49,8 +49,8 @@ class Frontend extends ApiFrontend {
 		// it and place in a separate class
 		$this->add('Menu',null,'Menu')
 			->addMenuItem('index','Welcome')
+			->addMenuItem('about','About')
 			->addMenuItem('how','Documentation')
-			->addMenuItem('authtest','Auth test')
 			->addMenuItem('logout')
 			;
 
@@ -72,9 +72,5 @@ class Frontend extends ApiFrontend {
 				->setAttr('href',$this->getDestinationURL('authtest'))
 				;
 		}
-	}
-	function page_examples($p){
-		header('Location: '.$this->pm->base_path.'examples');
-		exit;
 	}
 }
