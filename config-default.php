@@ -11,8 +11,9 @@ $config['url_prefix']='?page=';
 # values. For more options look at:
 #
 #  http://www.atk4.com/doc/config
+$config['atk4']['name']='Game Librarian';
 
 //$config['SierraBravo']['xboxV2']['GameLibrarian']['url']='http://xbox.sierrabravo.net/v2/xbox.wsdl';
 $config['SierraBravo']['xboxV2']['GameLibrarian']['url']='http://xbox.sierrabravo.net/v2/xbox.php?wsdl';
 $config['SierraBravo']['xboxV2']['GameLibrarian']['key']='7bb7aec6151ecf60370c50c2306efb86';
-$config['SierraBravo']['xboxV2']['GameLibrarian']['demo_mode']=false;
+$config['SierraBravo']['xboxV2']['GameLibrarian']['debug']=false;

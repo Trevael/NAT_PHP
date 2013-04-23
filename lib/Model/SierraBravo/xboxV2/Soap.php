@@ -23,7 +23,7 @@
 
 	}}} */
 
-class Model_SierraBravo_xboxV2_GameLibrarian extends AbstractModel {
+class Model_SierraBravo_xboxV2_Soap extends AbstractModel {
 	public $soap;
 	public $function;
 	public $area;
@@ -31,9 +31,9 @@ class Model_SierraBravo_xboxV2_GameLibrarian extends AbstractModel {
 
 	function init(){
 		parent::init();
+
 		$this->soap=new SoapClient($this->owner->url,array('trace'=>true,'exceptions'=>true));
-			$this->set('apiKey',$this->owner->key);
-			//$this->set('ClientID',$this->owner->client);
+		$this->set('apiKey',$this->owner->key);
 	}
 	function set($key,$val=null){
 		if(is_array($key)){
@@ -52,20 +52,16 @@ class Model_SierraBravo_xboxV2_GameLibrarian extends AbstractModel {
 			return $this;
 	}
 	function process(){
-		if($this->api->getConfig('SierraBravo/xboxV2/GameLibrarian/demo_mode',false)){
-			return $this;
-		}
-
 		$fn=$this->function;
 		$args=$this->arguments;
 
 		// handle return values and throw exceptions!
-		$this->resp=$this->soap->__call($fn,$args);
-
-		if(isset($this->resp)){
-			$fn=$this->area.'.'.$this->function;
-			foreach($this->resp as $key=>$val){
-				if(substr($key,-6)=='Result')$this->result=$val;
+		$this->resp=$this->soap->__soapCall($fn,$args);
+		
+		if( (isset($this->resp)) && (is_array($this->resp)) ){
+			$this->result=array();
+			foreach ($this->resp as $resp) {
+				array_push($this->result, $resp);
 			}
 			if($this->result){
 				if(isset($this->result->enc_value))$this->result=$this->result->enc_value;
@@ -76,12 +72,13 @@ class Model_SierraBravo_xboxV2_GameLibrarian extends AbstractModel {
 						<pre>".htmlentities($this->soap->__getLastRequest()).'</pre>');
 				}
 			}else{
-				//var_dump('No Result: ',$this->resp);
-				$this->hook('request-failed',array($this,$this->resp));
-				//throw new BaseException("No results returned from:<br><br>
-				//	SOAP Headers<br><pre>".htmlentities($this->soap->__getLastRequestHeaders())."</pre>
-				//	SOAP Request<br><pre>".htmlentities($this->soap->__getLastRequest())."</pre>
-				//	SOAP Response<br><pre>".htmlentities($this->soap->__getLastResponse())."</pre>");
+				if($this->owner->debug){
+					throw new BaseException("No Results from
+							<pre>".htmlentities($this->soap->__getLastRequest())."</pre>"
+							."<pre>".htmlentities($this->soap->__getLastResponse())."</pre>"
+					);
+				}
+				return;
 			}
 		}
 
