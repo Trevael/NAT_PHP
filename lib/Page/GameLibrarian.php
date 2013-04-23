@@ -43,7 +43,7 @@ class Page_GameLibrarian extends Page {
 		//$g->addPaginator(5);
 
 		//Add notice about viewing the source code;
-		$this->add('view_Info')->add('View',null,null,array('view/source'));
+		$this->add('View_Info')->add('View',null,null,array('view/source'));
 
 
 		//call to refresh the games list

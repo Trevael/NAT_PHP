@@ -12,7 +12,7 @@ class page_index extends Page_GameLibrarian {
 			$f=$this->add('Form_AddGame');
 		} else {
 			$this->add('View_Warning')->add('View',null,null,array('view/onceaday'));
-			$this->add('hr');
+			$this->add('HR');
 		}
 
 		//call to refresh this page
